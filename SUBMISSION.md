@@ -22,6 +22,6 @@ Repository-local CLI `0.39.1`. Direct Mode SDK pin `v0.2.12`. No frontend.
 
 ## Evidence status
 
-**Not yet deployed from this generated package. Fill only after actual finalised 61999 deployment and lifecycle execution.**
+Deployed and exercised on stable Studionet 61999. The deployment and live lifecycle transactions are finalized, and the source commit passed exact-head CI before deployment.
 
 See `REVIEW_EVIDENCE.md`.

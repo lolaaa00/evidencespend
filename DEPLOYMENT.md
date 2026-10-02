@@ -59,17 +59,16 @@ Deployment and lifecycle writes are not review evidence until their transactions
 
 ## Deployment record
 
-**Not yet deployed from this generated package.**
+- deployed source commit: `a32dd78a8537a35ff9926f92e607dd39e8c72d9f`
+- source SHA-256: `8a0a5f5b5802540ee6c51fc049705b0e039e0c5bc8a72d544e134d06fc8924ad`
+- source bytes: `28949`
+- contract address: `0xed7c9bC18b9881984F248Fa0FF1eeec30d701571`
+- deployment transaction: `0xd3a1e2981ef0c0c18b01ccf1408ace2f10ebb05b0a76f9062eb4273a584d7c18`
+- deployment finality: `FINALIZED`
+- consensus result: `MAJORITY_AGREE`
+- execution result: `SUCCESS`
+- runtime chain ID: `61999`
+- explorer: `https://genlayer-explorer.vercel.app`
+- predeployment exact-head CI: `https://github.com/lolaaa00/evidencespend/actions/runs/37005025968` (`success`)
 
-Fill the following only from observed evidence:
-
-- deployed commit: `PENDING`
-- predeployment source SHA-256: `8a0a5f5b5802540ee6c51fc049705b0e039e0c5bc8a72d544e134d06fc8924ad`
-- predeployment source bytes: `28949`
-- contract address: `PENDING`
-- deployment transaction: `PENDING`
-- deployment finality: `PENDING`
-- consensus result: `PENDING`
-- runtime chain ID: `PENDING`
-- explorer address URL: `PENDING`
-- exact-head CI run: `PENDING`
+See `REVIEW_EVIDENCE.md` for finalized lifecycle transactions and policy proofs.

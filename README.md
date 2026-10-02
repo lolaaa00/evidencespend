@@ -169,3 +169,7 @@ Direct Mode dependencies require network access during initial installation. CI 
 - `SUBMISSION.md`
 
 Deployment evidence files intentionally contain no fabricated transaction data. They must only be filled from actual finalized Studionet 61999 observations.
+
+## Live deployment
+
+The tested source at commit `a32dd78a8537a35ff9926f92e607dd39e8c72d9f` is deployed on stable Studionet 61999 at `0xed7c9bC18b9881984F248Fa0FF1eeec30d701571`. Deployment and the reviewer lifecycle are finalized. See `REVIEW_EVIDENCE.md` for transaction hashes, evidence IDs, semantic decisions, and the precise trust boundary.

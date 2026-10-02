@@ -127,7 +127,10 @@ def test_direct_mode_pin_is_v0212():
     assert 'SDK = "v0.2.12"' in tests
 
 
-def test_submission_does_not_claim_unobserved_deployment():
+def test_submission_links_observed_deployment_evidence():
     text = (ROOT / "SUBMISSION.md").read_text().lower()
-    assert "not yet deployed" in text
-    assert "fill only after" in text
+    evidence = (ROOT / "REVIEW_EVIDENCE.md").read_text().lower()
+    assert "deployed and exercised on stable studionet 61999" in text
+    assert "0xed7c9bc18b9881984f248fa0ff1eeec30d701571" in evidence
+    assert "finalized" in evidence
+    assert "pending" not in evidence
