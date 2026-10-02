@@ -13,9 +13,9 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: '20'}
       - run: npm install
+      - run: pip install -r requirements-test.txt
       - run: |
           python scripts/repo-preflight.py
           npm run toolchain:check
           pytest tests/invariants -q
-      - run: pip install -r requirements-test.txt
       - run: pytest tests/direct -v -s
