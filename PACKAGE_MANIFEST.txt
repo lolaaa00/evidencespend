@@ -1,0 +1,33 @@
+EVIDENCESPEND generated package manifest
+Target repository: https://github.com/lolaaa00/evidencespend
+Network: stable Studionet / chain 61999
+Generated package is not yet deployed.
+
+03fbd810cd72aa9f107a40203837a59b0d7225898ea8facaca1024647dc17f2b       101  .env.example
+a384a78f1b255c724432264f6cb5dddef929e89efbf3b9cf4a4f5400a566a2e8       569  .github/workflows/ci.yml
+1870fb66e80093315fa90ba5f0371d4a2657f2da830a68afd59ce9f58868184c        87  .gitignore
+b4bc4cf831ac3478657138f34162f56ab89cb58c2ef5568ee4c2ec416eb1d007      1699  DEPLOYMENT.md
+a01134214e304643a0416e645145ce50432a91f0ef4e49e13cb5475f0876c918      1083  LICENSE
+3e0512808e00142c984ab5f4b3d5dfbb999996173af4e46592f5985de9cacb53      2253  LIVE_DEMO.md
+37b698bbc786d4c96498477331e2c61d69595908ddef6523d2b6e839a1a3de65      9536  LOLA_CLAUDE_HANDOFF.txt
+c5a93a29cb517717e18cbe7beb5a2f9cead9f458d5135f5744be478e0c3871de      6356  README.md
+19fdf98e385d1089b1ffaf149ca3b73132560451df5787079c3d31a232e90a21      2089  REVIEW_EVIDENCE.md
+9c5109919bf7af4449ca705d58cd660555630c1227a299f7a521480dc4b75ab1      1805  SUBMISSION.md
+8a0a5f5b5802540ee6c51fc049705b0e039e0c5bc8a72d544e134d06fc8924ad     28949  contracts/evidence_spend.py
+018b909586c6ce3f67fe8a616b9865d879efe83b24debf693c956a40cde9c579      2813  docs/ARCHITECTURE.md
+b3ae2154929e77bdf0fe2b9acd65cd32776f0754fb3d683d65eaa8e0e6e0e969      2030  docs/INVARIANTS.md
+285bbdf882bc4a502fd58ea9cb8d4acf866fce2ab89fcd40c56f84bea20c3a9a      2144  docs/SECURITY.md
+fe96dddb97413dda165099fa1997454ad31d8e15627f9e5d8567fc3c53fbe8d5      1706  docs/THREAT_MODEL.md
+1ca6bafa03c205c969ae90928c5f5e3628397a029c17aa4ab3ea91456ea74920       248  gltest.config.yaml
+b6cafac89d7a0bf5d1e34aa9a120c11140b4df667aad996a60e660d0c6ef45fe       620  package.json
+f86b529005c87afce62aac694d1a4fd1f3411ea33b4039476d322590022e8500        64  pyproject.toml
+031aedeff59e1b7487f1a62ff0c33f8cf63f2cb44844c369667a6600d0dcb6bd        83  requirements-test.txt
+149033894cd038de2e6fe5a21bc826cf984145addc4af4c9044ae16242bd933a        53  requirements.txt
+7b5ed0a44bbd5074159b3d2199b66092c75d2fae4b68d16dd69c4f5a4600f532      1516  scripts/check-toolchain.mjs
+ea17e3f21074c5efa95b80980d6a9f9760b4fc600002481e538d68877b22133c      1229  scripts/deploy-studionet.mjs
+186cb734c4d188a8da2eee9618c8a47895b22cc607d6a2fe41f268d753817af3      1341  scripts/repo-preflight.py
+d514b167334310f28660d7889c167b9ca2e0a055a87cff7049ceeed538bb1b0e       279  scripts/source-digest.py
+fe484384d205a775ad5079fab05fdda874e464571d3824e95e16fb1c10dca173       290  tests/conftest.py
+794baeecac7c637d588d94135a546e70d3b7a6d912bb91392835d3479f41fc65      3940  tests/direct/test_boundaries.py
+a016c076ab299e569119999993050190fd0b5ea673e593004cdcb1c4c37efc90     15423  tests/direct/test_evidence_spend.py
+440377787b3ea47d2767c1da357bd2e1c83912b37ebe879993a3971bae1963b3      3795  tests/invariants/test_repo_invariants.py

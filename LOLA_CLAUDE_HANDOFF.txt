@@ -1,0 +1,247 @@
+EVIDENCESPEND — CLAUDE CODE FINAL HANDOFF
+
+You are working INSIDE an already-unzipped EVIDENCESPEND repository folder supplied by Lola.
+Do not create or extract another zip. Continue in this folder.
+
+TARGET REPOSITORY
+https://github.com/lolaaa00/evidencespend
+
+MISSION
+Finish, verify, deploy, evidence, and push EVIDENCESPEND as a standalone reusable GenLayer Intelligent Contract submission.
+
+ABSOLUTE PRODUCT BOUNDARY
+- CONTRACT ONLY.
+- NO frontend.
+- NO Next.js, Vite, React, HTML app, dashboard, wallet UI or browser extension.
+- NO application backend.
+- Do not add Supabase, Firebase, Express, server databases, workers, queues, cron or central AI services.
+- The Intelligent Contract is the product.
+
+ABSOLUTE NETWORK / TOOLCHAIN
+- Network: stable Studionet.
+- Chain ID: 61999.
+- RPC: https://studio.genlayer.com/api
+- Repository-local GenLayer CLI: exactly 0.39.1.
+- Use npx / node_modules local CLI only.
+- Direct Mode SDK pin: v0.2.12.
+- gltest target pin in requirements-test.txt: v0.29.2.
+- DO NOT use 61997.
+- DO NOT use Studio-dev / studionet-dev.
+- DO NOT use a global GenLayer 0.40.0rc2 or any RC as fallback.
+- If any tool silently changes the network or CLI, stop and fix the toolchain before deployment.
+
+CORE PRIMITIVE — DO NOT REDESIGN
+EVIDENCESPEND is semantic double-spend protection for evidence.
+
+It must keep the following separation:
+1. Deterministic policy decides which previous evidence is relevant to compare.
+2. Exact relevant content_digest equality is deterministically SAME_EVIDENCE.
+3. GenLayer consensus is used only for relation classification between distinct frozen evidence descriptors:
+   - SAME_EVIDENCE
+   - DERIVED_EVIDENCE
+   - OVERLAPPING_EVIDENCE
+   - INDEPENDENT_EVIDENCE
+   - AMBIGUOUS
+4. Deterministic code alone enforces reuse modes:
+   - SHAREABLE
+   - EXCLUSIVE
+   - INDEPENDENT_REQUIRED
+5. Ambiguous or blocked decisions must never increase accepted_count or accepted-spend history.
+6. The relation classifier must remain policy-blind. Do not expose reuse mode, remaining counts, authorization or desired outcome to the LLM.
+7. Do not silently turn this into a truth oracle. EVIDENCESPEND does not prove evidence truth, authority, issuer identity or URL authenticity.
+
+FIRST: AUDIT THE PROVIDED PACKAGE
+Before changing anything:
+- inspect every file;
+- read README.md, docs/ARCHITECTURE.md, docs/SECURITY.md, docs/INVARIANTS.md, docs/THREAT_MODEL.md, DEPLOYMENT.md, LIVE_DEMO.md and REVIEW_EVIDENCE.md;
+- inspect contracts/evidence_spend.py line by line;
+- inspect every direct and invariant test;
+- run git status if this folder is already a repo;
+- do not trust completion claims in docs; prove everything yourself.
+
+REPOSITORY SETUP
+If .git does not exist:
+- git init
+- git branch -M main
+
+Set the remote only after confirming the target:
+https://github.com/lolaaa00/evidencespend
+
+Do not push to ometere123.
+Do not push to any other account.
+If authentication does not have write permission to lolaaa00/evidencespend, STOP before pushing and report the exact permission problem. Do not redirect the project elsewhere.
+
+TOOLCHAIN GATE
+Run and prove:
+- npm install
+- npx genlayer --version
+- npm run toolchain:check
+- python scripts/repo-preflight.py
+- pytest tests/invariants -q
+
+Expected local CLI: 0.39.1.
+The toolchain check must prove stable Studionet configuration and required chain 61999.
+
+DIRECT MODE
+Create/activate a Python 3.12 virtual environment if needed.
+Install requirements-test.txt.
+Run:
+pytest tests/direct -v -s
+
+Do not reduce, delete, xfail or weaken a test merely to make CI green.
+If a provided Direct Mode test reveals a real contract defect, fix the contract and add/retain a regression test.
+If a test is objectively wrong because of an SDK API mismatch, correct the test while preserving the intended invariant and document exactly why.
+
+QUALITY TARGET
+Audit aggressively for:
+- malicious leader behavior;
+- malformed model output;
+- wrong relation-vector cardinality;
+- prompt injection inside evidence descriptors;
+- exact-digest bypass attempts;
+- same evidence rehosted with a different record ID;
+- derived summaries passed as independent reports;
+- partial overlap;
+- shareable vs exclusive cross-order behavior;
+- independence groups;
+- multi-item requirement duplicate counting;
+- unauthorized consumers;
+- mutation after seal;
+- blocked/ambiguous state mutation;
+- comparator and accepted-spend bounds;
+- state consistency after every failure path.
+
+CUSTOM VALIDATOR REQUIREMENT
+Do not downgrade run_nondet_unsafe to a leader-only or format-only check.
+Validators must independently recompute the semantic relation vector and reject a malicious leader result they do not reproduce.
+
+GENVM / STATIC VALIDATION
+Use the repository-compatible GenLayer / GenVM lint or validation command available under CLI 0.39.1 / the installed test toolchain.
+Do not upgrade the project merely to access newer lint tooling.
+Run Python parse/preflight and any valid GenVM checks available for this pinned stack.
+
+CI
+Make GitHub Actions green on the exact final commit.
+CI must at minimum run:
+- npm install
+- repo-preflight
+- toolchain guard
+- invariant tests
+- Direct Mode tests
+
+Do not claim CI is green until the exact-head run is completed successfully.
+
+CHECKPOINT DISCIPLINE
+Push meaningful checkpoints to main as work progresses, but keep the history clean.
+At each major checkpoint record:
+- commit SHA
+- tests run and counts
+- CI run URL/status if available
+- what changed
+
+Never fabricate transaction hashes, CI IDs, deployment addresses or test counts.
+
+DEPLOYMENT GATE
+Before deployment:
+1. npx genlayer --version must prove 0.39.1.
+2. npx genlayer network set studionet
+3. npx genlayer network info
+4. Independently verify the network info proves chain 61999 and https://studio.genlayer.com/api.
+5. If it says 61997 or Studio-dev, STOP. Do not deploy.
+
+Deploy contracts/evidence_spend.py using the repository deployment script / repository-local CLI.
+
+After deployment:
+- call runtime_chain_id(); require exactly 61999;
+- wait for deployment transaction FINALIZED status;
+- record consensus outcome;
+- compute source SHA-256 and byte count using python scripts/source-digest.py;
+- verify deployed source corresponds to the exact repository commit being documented.
+
+LIVE LIFECYCLE — REQUIRED
+Do not stop at deployment.
+Execute the LIVE_DEMO.md lifecycle on real stable Studionet 61999.
+
+At minimum prove:
+A. Create and seal a ledger requiring two independent pieces of evidence.
+B. Register Evidence A and accept it as the first item.
+C. Register a different-digest record that is truthfully a derivative/repackaging of A.
+D. Spend it and obtain BLOCKED (or fail-closed AMBIGUOUS if real validators genuinely cannot resolve it; if so improve the frozen descriptors without gaming the model until the intended semantic distinction is clear and defensible).
+E. Prove accepted_count did not change after the blocked attempt.
+F. Register genuinely independent Evidence C.
+G. Spend C and obtain INDEPENDENT_EVIDENCE / ACCEPTED.
+H. Prove the requirement is now satisfied.
+I. Also execute one exact-digest duplicate path showing deterministic blocking without needing semantic independence.
+
+Use real public, non-sensitive evidence descriptors suitable for review. The demo should be easy for another reviewer to understand and reproduce.
+
+FINALITY
+Distinguish SUBMITTED, ACCEPTED and FINALIZED.
+Do not use ACCEPTED alone as proof of blockchain finality.
+Wait for and document FINALIZED outcomes.
+
+DOCUMENTATION AFTER REAL EXECUTION
+Only after tests/deployment/live execution are real, update:
+- REVIEW_EVIDENCE.md
+- DEPLOYMENT.md
+- SUBMISSION.md
+- README.md only where live facts belong
+
+Record:
+- final commit SHA
+- source SHA-256 / bytes
+- exact-head CI run
+- contract address
+- deployment tx hash
+- deployment finality and consensus result
+- runtime_chain_id = 61999
+- explorer address URL
+- lifecycle transaction hashes
+- before/after relevant state
+- final Direct Mode test count
+- invariant test count
+
+Do not leave stale "PENDING" values in reviewer-facing evidence once the real values exist.
+Do not replace PENDING with guesses.
+
+README / SUBMISSION LANGUAGE
+Keep claims precise:
+- This is semantic evidence-reuse accounting, not an evidence-truth oracle.
+- content_digest is caller-supplied and gives deterministic exact identity; the contract does not independently fetch/hash source_ref.
+- Different digest does not imply independence.
+- Consensus classifies relation only.
+- Deterministic code owns policy and settlement.
+- Ambiguity fails closed.
+
+NO FRONTEND
+Do not add one even for demonstration. Use tests, CLI/Studio transactions, explorer evidence and documentation.
+
+FINAL PUSH
+Push the finished repository to:
+https://github.com/lolaaa00/evidencespend
+branch: main
+
+Then verify the GitHub repository itself shows:
+- the intended final commit;
+- green exact-head CI;
+- no frontend;
+- no accidental secrets;
+- no generated venv/node_modules/artifacts committed;
+- no 61997 or Studio-dev configuration;
+- no unrelated files.
+
+FINAL REPORT TO LOLA
+Return a concise but complete report containing:
+1. final commit SHA;
+2. contract address;
+3. deployment tx + FINALIZED/consensus status;
+4. runtime chain ID proof = 61999;
+5. source SHA-256 + byte count;
+6. Direct Mode count;
+7. invariant test count;
+8. CI run URL/status;
+9. live lifecycle tx hashes and outcomes;
+10. explorer link;
+11. any remaining limitation or unverified claim.
+
+Do not say "done" if any deployment, finality, CI, lifecycle, or evidence step is still pending.
